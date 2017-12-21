@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>FYP</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-theme.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-2.0.3.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
+    <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+
+
+
+
+</head>
+<body>
+  <style>
+  .mainModule {
+      font: 20px Montserrat, sans-serif;
+      line-height: 1.8;
+      color: #f5f6f7;
+  }
+  .mainModule > p {font-size: 16px;}
+   .mainModule >.margin {margin-bottom: 45px;}
+  .mainModule > .bg-1 {
+      background-color: #1abc9c; /* Green */
+      color: #ffffff;
+  }
+  .mainModule >.bg-2 {
+      background-color: #474e5d; /* Dark Blue */
+      color: #ffffff;
+  }
+   .mainModule >.bg-3 {
+      background-color: #ffffff; /* White */
+      color: #555555;
+  }
+   .mainModule >.bg-4 {
+      background-color: #2f2f2f; /* Black Gray */
+      color: #fff;
+  }
+   .mainModule .container-fluid {
+      padding-top: 70px;
+      padding-bottom: 70px;
+  }
+  .navbar {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border: 0;
+      border-radius: 0;
+      margin-bottom: 0;
+      font-size: 12px;
+      letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+      color: #1abc9c !important;
+  }
+
+{#      Previous#}
+
+  </style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="color: black; font-family: Sans-serif;">FYP Word Puzzle Solver Using IP, NN and Searching Algorithms</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <div class="mainModule">
+      <div class="container-fluid bg-1 text-center" style="height: 300px;">
+<div align="center">
+{#          <a href="http://localhost:5000/" class="btn btn-large btn-info" >#}
+{#          <span class="glyphicon glyphicon-home"></span> Take Me Home</a>#}
+</div>
+    <h2 align="center">
+        Solve Puzzle Using
+    </h2><br/>
+    <div class="row">
+    <div class="col-md-4">
+        <form action="{{ url_for('solutionL')}}" method="post" enctype="multipart/form-data">
+        <input type="submit" class="btn btn-primary" value="Linear Search"  style="height: 60px; font-size: large; width: 200px;" >
+    </form>
+    </div>
+         <div class="col-md-4">
+            <form action="{{ url_for('solutionB')}}" method="post" enctype="multipart/form-data">
+    <input type="submit" class="btn btn-primary" value="Binary Search"  style=" height: 60px; font-size: large; width: 200px;" >
+   </form>
+
+    </div>
+
+        <div class="col-md-4">
+        <form action="{{ url_for('solutionT')}}" method="post" enctype="multipart/form-data">
+    <input type="submit" class="btn btn-primary" value="Tries"  style="height: 60px; font-size: large; width: 200px;" >
+    </form>
+    </div>
+    </div>
+</div>
+  </div>
+<br/>
+  <br/>
+
+  <div class="container-fluid bg-2 text-center" style="margin-left: 20%; margin-right: 20%;">
+
+  <table class="table">
+    {% for words in detected %}
+      <tr>
+                    {% for letters in words %}
+          <td>
+
+                <span style="font-weight: bold">{{ letters }}</span>
+
+          </td>
+                             {% endfor %}
+      </tr>
+
+          {% endfor %}
+  </table>
+
+
+
+</div>
+
+
+
+
+  <br/>
+  <br/>
+
+  {%  if grid == True %}
+<div id="resultTable" style="display: block;">
+    <div class="row">
+        <div class="col-md-12">
+            <table data-toggle="table"
+                   data-sort-name="stargazers_count"
+                   data-sort-order="desc"
+                    data-show-columns="true"
+                       data-pagination="true"
+                         data-query-params="queryParams"
+                   data-search="true">
+                <thead>
+                <tr>
+                    <th data-field="word"
+                        data-sortable="true">
+                            Word Detected
+                    </th>
+                    <th data-field="stargazers_count"
+                        data-sortable="true">
+                            Meaning
+                    </th>
+                    <th data-field="meaning"
+                        data-sortable="true">
+                            Direction
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                  {% for index, item in matchedWords %}
+                      <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ matchedMeaning[index] }}</td>
+                            <td>{{ matchedDirection[index] }}</td>
+
+                      </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="row bg-2" align="center">
+{#        <h2>Final Accuracy: </h2>#}
+    </div>
+</div>
+{% endif %}
+  <br/><br/>
+
+<!-- Footer -->
+ <footer style="color: black; margin-left: 42%;"> 
+    <p>© Nikita Gautam - FYP Project - Batch 2017</p> 
+</footer> 
+</body>
+</html>
+
